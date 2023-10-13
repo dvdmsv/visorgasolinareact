@@ -1,0 +1,11 @@
+.contenedor-selectores{
+    display: flex;
+    align-items: center;
+    width: 70%;
+    margin: auto;
+    margin-top: 90px;
+}
+
+.selector{
+    margin: 20px;
+}

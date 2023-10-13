@@ -1,23 +1,17 @@
-import logo from './logo.svg';
 import './App.css';
+import BarraNavegacion from './componentes/BarraNavegacion/BarraNavegacion';
+import Selectores from './componentes/Selectores/Selectores';
+import Tabla from './componentes/Tabla/Tabla';
+import { IdsProvider } from './servicios/IDsContext.js';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <IdsProvider>
+        <BarraNavegacion />
+        <Selectores />
+        <Tabla />
+      </IdsProvider>
     </div>
   );
 }
