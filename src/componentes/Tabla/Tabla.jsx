@@ -11,11 +11,12 @@ function Tabla(){
     const { IDMunicipio, IDProvincia } = useIds();
     const [gasolineras, setGasolineras] = useState();
 
+    //Obtiene las gasolineras de la localidad
     useEffect(()=>{
         const fetchData = async (IDMunicipio) => {
             try {
                 const result = await getGasolinerasLocalidad(IDMunicipio);
-                setGasolineras(result.ListaEESSPrecio);
+                setGasolineras(ordenarGasolineras(filtrarGasolineras(result.ListaEESSPrecio)));
             }catch (error) {
                 console.error('Error al obtener provincias:', error);
             }
@@ -23,11 +24,12 @@ function Tabla(){
         fetchData(IDMunicipio);
     }, [IDMunicipio]);
 
+    //Obtiene las gasolineras de la provincia
     useEffect(()=>{
         const fetchData = async (IDProvincia) => {
             try {
                 const result = await getGasolinerasProvincia(IDProvincia);
-                setGasolineras(result.ListaEESSPrecio);
+                setGasolineras(ordenarGasolineras(filtrarGasolineras(result.ListaEESSPrecio)));
             }catch (error) {
                 console.error('Error al obtener provincias:', error);
             }
@@ -35,7 +37,24 @@ function Tabla(){
         fetchData(IDProvincia);
     }, [IDProvincia]);
 
-    console.log(gasolineras);
+    //Funcion que filtra las gasolineras que no tienen precios en el combustible seleccionado
+    function filtrarGasolineras(gasolineras){ //Recibe el array de gasolineras
+        const gasolinerasFiltradas = gasolineras.filter(gasolinera =>{
+            return gasolinera['Precio Gasoleo A'] !== ""; //Filtra las gasolineras que tienen vacío el campo de precio en el combustible
+        })
+        return gasolinerasFiltradas;
+    }
+
+    //Funcion que ordena las gasolineras por precio de menor a mayor 
+    function ordenarGasolineras(gasolineras){
+        const gasolinerasOrdenadas = gasolineras.sort((a, b) =>{
+            const precioA = parseFloat(a['Precio Gasoleo A'].replace(",", ".")); //Se pasa a float el string que contiene el precio y se sustituye la coma por un .
+            const precioB = parseFloat(b['Precio Gasoleo A'].replace(",", "."));
+            return precioA - precioB; //Si restar precioA a precioB da negativo significa que es menor y por lo tanto se ordena antes
+        });
+        return gasolinerasOrdenadas;
+    }
+
     return(
         <div className="contenedor-tabla">
                 <Table striped bordered="5px" variant="light">
@@ -50,9 +69,9 @@ function Tabla(){
                        {gasolineras?.map(gasolinera =>{
                             return(
                                 <tr key={nanoid()}>
-                                    <td >{gasolinera['Rótulo']}</td>
-                                    <td >{gasolinera['Dirección']}</td>
-                                    <td >{gasolinera['Precio Gasoleo A']}</td>
+                                    <td>{gasolinera['Rótulo']}</td>
+                                    <td>{gasolinera['Dirección']}</td>
+                                    <td>{gasolinera['Precio Gasoleo A']}</td>
                                 </tr>
                             )
                        })}
