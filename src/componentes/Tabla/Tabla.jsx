@@ -9,9 +9,6 @@ import "./Tabla.css"
 
 function Tabla({ combustibleURL }){
 
-    const urlParam = new URLSearchParams(window.location.search);
-    const parametro = urlParam.get("combustible");
-
     const { IDMunicipio, IDProvincia } = useIds();
     const [gasolineras, setGasolineras] = useState();
 
