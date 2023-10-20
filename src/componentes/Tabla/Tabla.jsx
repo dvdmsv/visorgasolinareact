@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import { useIds } from "../../servicios/IDsContext";
 import { useEffect, useState } from 'react';
@@ -7,6 +8,9 @@ import { nanoid } from 'nanoid';
 import "./Tabla.css"
 
 function Tabla(){
+
+    const urlParam = new URLSearchParams(window.location.search);
+    const parametro = urlParam.get("combustible");
 
     const { IDMunicipio, IDProvincia } = useIds();
     const [gasolineras, setGasolineras] = useState();
@@ -40,7 +44,7 @@ function Tabla(){
     //Funcion que filtra las gasolineras que no tienen precios en el combustible seleccionado
     function filtrarGasolineras(gasolineras){ //Recibe el array de gasolineras
         const gasolinerasFiltradas = gasolineras.filter(gasolinera =>{
-            return gasolinera['Precio Gasoleo A'] !== ""; //Filtra las gasolineras que tienen vacío el campo de precio en el combustible
+            return gasolinera[parametro] !== ""; //Filtra las gasolineras que tienen vacío el campo de precio en el combustible
         })
         return gasolinerasFiltradas;
     }
@@ -48,8 +52,8 @@ function Tabla(){
     //Funcion que ordena las gasolineras por precio de menor a mayor 
     function ordenarGasolineras(gasolineras){
         const gasolinerasOrdenadas = gasolineras.sort((a, b) =>{
-            const precioA = parseFloat(a['Precio Gasoleo A'].replace(",", ".")); //Se pasa a float el string que contiene el precio y se sustituye la coma por un .
-            const precioB = parseFloat(b['Precio Gasoleo A'].replace(",", "."));
+            const precioA = parseFloat(a[parametro].replace(",", ".")); //Se pasa a float el string que contiene el precio y se sustituye la coma por un .
+            const precioB = parseFloat(b[parametro].replace(",", "."));
             return precioA - precioB; //Si restar precioA a precioB da negativo significa que es menor y por lo tanto se ordena antes
         });
         return gasolinerasOrdenadas;
@@ -70,8 +74,9 @@ function Tabla(){
                             return(
                                 <tr key={nanoid()}>
                                     <td>{gasolinera['Rótulo']}</td>
-                                    <td>{gasolinera['Dirección']}</td>
-                                    <td>{gasolinera['Precio Gasoleo A']}</td>
+                                    {/* <td><a target="_blank" rel="noopener noreferrer" href={'https://www.google.es/maps/place/' + gasolinera.Latitud.replace(",", ".") + ',' + gasolinera['Longitud (WGS84)'].replace(",", ".")}>{gasolinera['Dirección']}</a></td> */}
+                                    <td><a target="_blank" rel="noopener noreferrer" href={`https://www.google.com/maps/search/?api=1&query=${gasolinera.Latitud.replace(",", ".")},${gasolinera['Longitud (WGS84)'].replace(",", ".")}`}>{gasolinera['Dirección']}</a></td>
+                                    <td>{gasolinera[parametro]}</td>
                                 </tr>
                             )
                        })}

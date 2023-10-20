@@ -16,10 +16,10 @@ function BarraNavegacion(){
               style={{ maxHeight: '100px' }}
               navbarScroll
             >
-              <Nav.Link href="#action1">Diésel/Gasoil</Nav.Link>
-              <Nav.Link href="#action2">Diésel Premium</Nav.Link>
-              <Nav.Link href="#action3">Gasolina 95</Nav.Link>
-              <Nav.Link href="#action4">Diésel Premium</Nav.Link>
+              <Nav.Link href="?combustible=Precio Gasoleo A">Diésel/Gasoil</Nav.Link>
+              <Nav.Link href="?combustible=Precio Gasoleo Premium">Diésel Premium</Nav.Link>
+              <Nav.Link href="?combustible=Precio Gasolina 95 E5">Gasolina 95</Nav.Link>
+              <Nav.Link href="?combustible=Precio Gasolina 98 E5">Gasolina 98</Nav.Link>
           </Nav>
           </Navbar.Collapse>
       </Container>
