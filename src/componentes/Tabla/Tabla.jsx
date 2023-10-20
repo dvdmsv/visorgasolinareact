@@ -7,7 +7,7 @@ import { Table } from "react-bootstrap"
 import { nanoid } from 'nanoid';
 import "./Tabla.css"
 
-function Tabla(){
+function Tabla({ combustibleURL }){
 
     const urlParam = new URLSearchParams(window.location.search);
     const parametro = urlParam.get("combustible");
@@ -44,7 +44,7 @@ function Tabla(){
     //Funcion que filtra las gasolineras que no tienen precios en el combustible seleccionado
     function filtrarGasolineras(gasolineras){ //Recibe el array de gasolineras
         const gasolinerasFiltradas = gasolineras.filter(gasolinera =>{
-            return gasolinera[parametro] !== ""; //Filtra las gasolineras que tienen vacío el campo de precio en el combustible
+            return gasolinera[combustibleURL] !== ""; //Filtra las gasolineras que tienen vacío el campo de precio en el combustible
         })
         return gasolinerasFiltradas;
     }
@@ -52,8 +52,8 @@ function Tabla(){
     //Funcion que ordena las gasolineras por precio de menor a mayor 
     function ordenarGasolineras(gasolineras){
         const gasolinerasOrdenadas = gasolineras.sort((a, b) =>{
-            const precioA = parseFloat(a[parametro].replace(",", ".")); //Se pasa a float el string que contiene el precio y se sustituye la coma por un .
-            const precioB = parseFloat(b[parametro].replace(",", "."));
+            const precioA = parseFloat(a[combustibleURL].replace(",", ".")); //Se pasa a float el string que contiene el precio y se sustituye la coma por un .
+            const precioB = parseFloat(b[combustibleURL].replace(",", "."));
             return precioA - precioB; //Si restar precioA a precioB da negativo significa que es menor y por lo tanto se ordena antes
         });
         return gasolinerasOrdenadas;
@@ -76,7 +76,7 @@ function Tabla(){
                                     <td>{gasolinera['Rótulo']}</td>
                                     {/* <td><a target="_blank" rel="noopener noreferrer" href={'https://www.google.es/maps/place/' + gasolinera.Latitud.replace(",", ".") + ',' + gasolinera['Longitud (WGS84)'].replace(",", ".")}>{gasolinera['Dirección']}</a></td> */}
                                     <td><a target="_blank" rel="noopener noreferrer" href={`https://www.google.com/maps/search/?api=1&query=${gasolinera.Latitud.replace(",", ".")},${gasolinera['Longitud (WGS84)'].replace(",", ".")}`}>{gasolinera['Dirección']}</a></td>
-                                    <td>{gasolinera[parametro]}</td>
+                                    <td>{gasolinera[combustibleURL]}</td>
                                 </tr>
                             )
                        })}
