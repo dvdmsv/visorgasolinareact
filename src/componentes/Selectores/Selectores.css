@@ -1,10 +1,19 @@
 .contenedor-selectores{
     display: flex;
     align-items: center;
-    width: 80%;
+    width: 500px;
     margin: auto;
 }
 
 .selector{
     margin: 20px;
 }
+
+@media only screen and (max-width: 600px) {
+    .contenedor-selectores{
+        display: flex;
+        align-items: center;
+        width: 80%;
+        margin: auto;
+    }
+  }
