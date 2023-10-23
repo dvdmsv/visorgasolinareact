@@ -58,7 +58,7 @@ function Tabla({ combustibleURL }){
 
     return(
         <div className="contenedor-tabla">
-                <Table striped bordered="5px" variant="light">
+                <Table striped bordered="5px" variant="light" className="tabla">
                     <thead>
                         <tr>
                             <th>Gasolinera</th>
