@@ -29,6 +29,7 @@ function Selectores(){
     function manejarSeleccionarProvincia(e){
         const IDProvincia = e.target.value;
         setIDProvincia(IDProvincia);
+        document.cookie = `IDProvincia=${IDProvincia}`;
 
         const fetchData = async (IDPovincia) => {
             try {
@@ -47,7 +48,9 @@ function Selectores(){
     }
 
     function manejarSeleccionarLocalidad(e){
-        setIDMunicipio(e.target.value);
+        const IDLocalidad = e.target.value
+        setIDMunicipio(IDLocalidad);
+        document.cookie = `IDLocalidad=${IDLocalidad}`;
     }
 
     return(

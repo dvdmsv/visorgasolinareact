@@ -11,7 +11,7 @@ function Tabla({ combustibleURL }){
 
     const { IDMunicipio, IDProvincia } = useIds();
     const [gasolineras, setGasolineras] = useState();
-
+    console.log(document.cookie)
     //Obtiene las gasolineras de la localidad
     useEffect(()=>{
         const fetchData = async (IDMunicipio) => {

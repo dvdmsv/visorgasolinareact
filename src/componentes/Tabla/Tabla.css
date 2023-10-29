@@ -1,4 +1,9 @@
 .tabla{
     width: 60%;
     margin: auto;
+    
+}
+
+.contenedor-tabla{
+    margin-bottom: 15px;
 }
