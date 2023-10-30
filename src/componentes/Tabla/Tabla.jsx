@@ -9,21 +9,9 @@ import "./Tabla.css"
 
 function Tabla({ combustibleURL }){
 
-    const { IDMunicipio, IDProvincia } = useIds();
+    const { IDMunicipio, IDProvincia, setPrecioMedio } = useIds();
     const [gasolineras, setGasolineras] = useState();
-    console.log(document.cookie)
-    //Obtiene las gasolineras de la localidad
-    useEffect(()=>{
-        const fetchData = async (IDMunicipio) => {
-            try {
-                const result = await getGasolinerasLocalidad(IDMunicipio);
-                setGasolineras(ordenarGasolineras(filtrarGasolineras(result.ListaEESSPrecio)));
-            }catch (error) {
-                console.error('Error al obtener provincias:', error);
-            }
-        };
-        fetchData(IDMunicipio);
-    }, [IDMunicipio]);
+    //console.log(document.cookie)
 
     //Obtiene las gasolineras de la provincia
     useEffect(()=>{
@@ -31,12 +19,27 @@ function Tabla({ combustibleURL }){
             try {
                 const result = await getGasolinerasProvincia(IDProvincia);
                 setGasolineras(ordenarGasolineras(filtrarGasolineras(result.ListaEESSPrecio)));
+                precioMedio(filtrarGasolineras(result.ListaEESSPrecio));
             }catch (error) {
                 console.error('Error al obtener provincias:', error);
             }
         };
         fetchData(IDProvincia);
     }, [IDProvincia]);
+
+    //Obtiene las gasolineras de la localidad
+    useEffect(()=>{
+        const fetchData = async (IDMunicipio) => {
+            try {
+                const result = await getGasolinerasLocalidad(IDMunicipio);
+                setGasolineras(ordenarGasolineras(filtrarGasolineras(result.ListaEESSPrecio)));
+                precioMedio(filtrarGasolineras(result.ListaEESSPrecio));
+            }catch (error) {
+                console.error('Error al obtener provincias:', error);
+            }
+        };
+        fetchData(IDMunicipio);
+    }, [IDMunicipio]);
 
     //Funcion que filtra las gasolineras que no tienen precios en el combustible seleccionado
     function filtrarGasolineras(gasolineras){ //Recibe el array de gasolineras
@@ -54,6 +57,17 @@ function Tabla({ combustibleURL }){
             return precioA - precioB; //Si restar precioA a precioB da negativo significa que es menor y por lo tanto se ordena antes
         });
         return gasolinerasOrdenadas;
+    }
+
+    function precioMedio(gasolineras){
+        let precioTotal = 0;
+        let precioMedio = 0;
+        for (const gasolinera of gasolineras) {
+            precioTotal = precioTotal + parseFloat(gasolinera[combustibleURL].replace(",", "."));
+            //console.log(gasolinera[combustibleURL].replace(",", "."));
+        }
+        precioMedio = precioTotal / gasolineras.length;
+        setPrecioMedio(precioMedio.toFixed(3));
     }
 
     return(

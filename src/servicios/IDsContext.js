@@ -9,9 +9,10 @@ export const useIds = () => {
 export const IdsProvider = ({ children }) => {
     const [IDProvincia, setIDProvincia] = useState(null);
     const [IDMunicipio, setIDMunicipio] = useState(null);
+    const [precioMedio, setPrecioMedio] = useState(null);
 
     return (
-    <IdsContext.Provider value={{ IDProvincia, setIDProvincia, IDMunicipio, setIDMunicipio }}>
+    <IdsContext.Provider value={{ IDProvincia, setIDProvincia, IDMunicipio, setIDMunicipio, precioMedio, setPrecioMedio }}>
         {children}
     </IdsContext.Provider>
     );
