@@ -9,7 +9,7 @@ import "./Tabla.css"
 
 function Tabla({ combustibleURL }){
 
-    const { IDMunicipio, IDProvincia, setPrecioMedio } = useIds();
+    const { IDMunicipio, IDProvincia, setPrecioMedio, precioMedio } = useIds();
     const [gasolineras, setGasolineras] = useState();
     //console.log(document.cookie)
 
@@ -19,7 +19,7 @@ function Tabla({ combustibleURL }){
             try {
                 const result = await getGasolinerasProvincia(IDProvincia);
                 setGasolineras(ordenarGasolineras(filtrarGasolineras(result.ListaEESSPrecio)));
-                precioMedio(filtrarGasolineras(result.ListaEESSPrecio));
+                calcularPrecioMedio(filtrarGasolineras(result.ListaEESSPrecio));
             }catch (error) {
                 console.error('Error al obtener provincias:', error);
             }
@@ -33,7 +33,7 @@ function Tabla({ combustibleURL }){
             try {
                 const result = await getGasolinerasLocalidad(IDMunicipio);
                 setGasolineras(ordenarGasolineras(filtrarGasolineras(result.ListaEESSPrecio)));
-                precioMedio(filtrarGasolineras(result.ListaEESSPrecio));
+                calcularPrecioMedio(filtrarGasolineras(result.ListaEESSPrecio));
             }catch (error) {
                 console.error('Error al obtener provincias:', error);
             }
@@ -59,12 +59,11 @@ function Tabla({ combustibleURL }){
         return gasolinerasOrdenadas;
     }
 
-    function precioMedio(gasolineras){
+    function calcularPrecioMedio(gasolineras){
         let precioTotal = 0;
-        let precioMedio = 0;
+        var precioMedio = 0;
         for (const gasolinera of gasolineras) {
             precioTotal = precioTotal + parseFloat(gasolinera[combustibleURL].replace(",", "."));
-            //console.log(gasolinera[combustibleURL].replace(",", "."));
         }
         precioMedio = precioTotal / gasolineras.length;
         setPrecioMedio(precioMedio.toFixed(3));
@@ -87,7 +86,9 @@ function Tabla({ combustibleURL }){
                                     <td>{gasolinera['Rótulo']}</td>
                                     {/* <td><a target="_blank" rel="noopener noreferrer" href={'https://www.google.es/maps/place/' + gasolinera.Latitud.replace(",", ".") + ',' + gasolinera['Longitud (WGS84)'].replace(",", ".")}>{gasolinera['Dirección']}</a></td> */}
                                     <td><a target="_blank" rel="noopener noreferrer" href={`https://www.google.com/maps/search/?api=1&query=${gasolinera.Latitud.replace(",", ".")},${gasolinera['Longitud (WGS84)'].replace(",", ".")}`}>{gasolinera['Dirección']}</a></td>
-                                    <td>{gasolinera[combustibleURL]}</td>
+                                    <td id={`${parseFloat(gasolinera[combustibleURL].replace(",", ".")) <= precioMedio ? "precioMenor" : "precioMayor"}`}>
+                                        {gasolinera[combustibleURL]}
+                                    </td>
                                 </tr>
                             )
                        })}

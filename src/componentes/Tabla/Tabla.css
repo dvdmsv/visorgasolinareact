@@ -7,3 +7,21 @@
 .contenedor-tabla{
     margin-bottom: 15px;
 }
+
+a{
+    color: black;
+}
+
+a:hover {
+    color: blue;
+}
+
+#precioMayor {
+    font-weight: bold;
+    color: red;
+}
+
+#precioMenor {
+    font-weight: bold;
+    color: green;
+}
