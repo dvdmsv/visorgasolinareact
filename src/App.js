@@ -30,7 +30,9 @@ function App() {
         <ParrafoCombustible 
           combustible={parametroCombustible}
         />
-        <Selectores />
+        <Selectores 
+          combustible={parametroCombustible}
+        />
         <Tabla
           combustibleURL={parametroCombustible}
         />

@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { useIds } from '../../servicios/IDsContext';
 import { getProvincias, getLocalidades } from "../../servicios/apiGasolineras";
 
-function Selectores(){
+function Selectores({ combustible }){
     
     const [provincias, setProvincias] = useState([]);
     const [localidades, setLocalidades] = useState([]);
@@ -35,9 +35,10 @@ function Selectores(){
             try {
                 const result = await getLocalidades(IDPovincia);
                 const localidades  = result.ListaEESSPrecio;
-                //Filtrar localidades repetidas
+                console.log(combustible);
+                //Filtrar localidades repetidas y localidades que no tienen gasolinera del combustible seleccionado
                 const localidadesUnicas = localidades.filter(
-                    (localidad, index, self) => self.findIndex((l) => l.IDMunicipio === localidad.IDMunicipio) === index
+                    (localidad, index, self) => self.findIndex((l) => l.IDMunicipio === localidad.IDMunicipio && localidad[combustible] !== "") === index
                 );
                 setLocalidades(localidadesUnicas);
             }catch (error) {
