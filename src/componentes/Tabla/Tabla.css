@@ -1,11 +1,11 @@
 .tabla{
-    width: 60%;
+    width: 70%;
     margin: auto;
     
 }
 
 .contenedor-tabla{
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 a{
@@ -25,3 +25,17 @@ a:hover {
     font-weight: bold;
     color: green;
 }
+
+@media only screen and (max-width: 600px) {
+
+    .tabla{
+        width: 100%;
+        margin: auto;
+        
+    }
+
+    .contenedor-tabla{
+        margin: 10px;
+        font-size: 14px;
+    }
+  }
