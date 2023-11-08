@@ -35,7 +35,6 @@ function Selectores({ combustible }){
             try {
                 const result = await getLocalidades(IDPovincia);
                 const localidades  = result.ListaEESSPrecio;
-                console.log(combustible);
                 //Filtrar localidades repetidas y localidades que no tienen gasolinera del combustible seleccionado
                 const localidadesUnicas = localidades.filter(
                     (localidad, index, self) => self.findIndex((l) => l.IDMunicipio === localidad.IDMunicipio && localidad[combustible] !== "") === index
