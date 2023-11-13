@@ -2,3 +2,14 @@
   display: flex;
   flex-direction: column;
 }
+
+.modoOscuro {
+  background-color: #2b3035;
+  color: white;
+}
+
+.container-switch{
+  position: sticky;
+  top: 80px;
+  margin-left: 15px;
+}

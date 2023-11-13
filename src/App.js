@@ -5,9 +5,11 @@ import Selectores from './componentes/Selectores/Selectores';
 import Tabla from './componentes/Tabla/Tabla';
 import { IdsProvider } from './servicios/IDsContext.js';
 import { useEffect, useState } from 'react';
+import Form from 'react-bootstrap/Form';
 
 function App() {
   const [parametroCombustible, setParametroCombustible] = useState(null);
+  const [modoOscuro, setModoOscuro] = useState(null);
 
   useEffect(() => {
     // Obtén el valor actual del parámetro 'combustible' de la URL
@@ -23,10 +25,28 @@ function App() {
     }
   }, []);
 
+  const alternarModoOscuro = () =>{
+    if(modoOscuro){
+      setModoOscuro(false);
+    }else{
+      setModoOscuro(true);
+    }
+  }
+
   return (
-    <div className="App">
+    
+    <div className={`App ${modoOscuro ? 'modoOscuro html' : ''}`}>
+      <Form className="container-switch" >
+        <Form.Check  
+          type="switch"
+          id="custom-switch"
+          label="Modo oscuro"
+          onChange={alternarModoOscuro}
+        />
+      </Form>
       <IdsProvider>
         <BarraNavegacion />
+        
         <ParrafoCombustible 
           combustible={parametroCombustible}
         />
